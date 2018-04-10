@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>タイピングの練習</title>
+<meta charset="utf-8">
+<link href="./typing.css" rel="stylesheet" type="text/css" media="all"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./typing.js"></script>
+</head>
+
+<body>
+<div id="wrapper">
+<form>
+    <select name="qtype" id="qtype">
+        <option value="fast_type">早打ち</option>
+        <option value="conv_type">日本語→英語</option>
+    </select>
+    <p><input type="button" id="start-button" value="Start" onClick="onStartButtonClick()">
+<span id="message">Press Start</span></p></form>
+
+<hr>
+
+<div style="font-weight: bold;" id="word">&nbsp;</div>
+<div id="type">&nbsp;</div>
+</div>
+</body>
+</html>
