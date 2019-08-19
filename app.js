@@ -12,7 +12,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -31,14 +31,15 @@ mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://127.0.0.1:27017/user_test", {useNewUrlParser: true});
 app.use(session({
 //  secret: this.defaultConfiguration.secret.session,
-  secret: 'secret',
+  secret: 'keyboard cat',
   saveUninitialized: true,
   resave: true,
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 // added
+//app.use(connect.cookieParser());
 app.use(passport.initialize());
-app.use(passport.session);
+app.use(passport.session());
 
 var User = require("./models/user");
 passport.use(new LocalStrategy(User.authenticate()));
@@ -53,10 +54,10 @@ app.use(function(req,res,next){
 });
 
 var index = require('./routes/index');
-var user = require('./routes/users');
+//var user = require('./routes/users');
 
 app.use('/index',index);
-app.use('/users',user);
+//app.use('/users',user);
 
 //passport.use(new LocalStrategy({
 //  usernameField: 'username',
@@ -75,7 +76,7 @@ app.use('/users',user);
 //}));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+//app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
