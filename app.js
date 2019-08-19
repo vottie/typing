@@ -12,7 +12,6 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 var indexRouter = require('./routes/index');
-//var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -30,14 +29,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://127.0.0.1:27017/user_test", {useNewUrlParser: true});
 app.use(session({
-//  secret: this.defaultConfiguration.secret.session,
   secret: 'keyboard cat',
   saveUninitialized: true,
   resave: true,
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 // added
-//app.use(connect.cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -54,29 +51,9 @@ app.use(function(req,res,next){
 });
 
 var index = require('./routes/index');
-//var user = require('./routes/users');
-
-app.use('/index',index);
-//app.use('/users',user);
-
-//passport.use(new LocalStrategy({
-//  usernameField: 'username',
-//  passwordField: 'password',
-//  passReqToCallback: true,
-//  session: false,
-//}, function (req, username, password, done) {
-//  process.nextTick(function () {
-//    if (username === "test" && password === "test") {
-//    return done(null, username)
-//    } else {
-//      console.log("login error")
-//      return done(null, false, {message : 'パスワードが正しくありません'})
-//    }
-//  })
-//}));
 
 app.use('/', indexRouter);
-//app.use('/users', usersRouter);
+app.use('/index',index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
