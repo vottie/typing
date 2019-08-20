@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
@@ -21,13 +22,19 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // added mongoose
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://127.0.0.1:27017/user_test", {useNewUrlParser: true});
+mongoose.connect("mongodb://127.0.0.1:27017/user_test", {useNewUrlParser: true}, function(err) {
+  if (err) {
+    console.log('Could not connect to mongodb on localhost.');
+  }
+});
+
 app.use(session({
   secret: 'keyboard cat',
   saveUninitialized: true,

@@ -12,10 +12,13 @@ router.get('/login', function(req, res) {
   res.render('login', {user : req.user });
 });
 
-router.post('/login', passport.authenticate('local',
-  {successRedirect: '/',
-  failureRedirect: '/login',
-  session: false}));
+//router.post('/login', passport.authenticate('local',
+//  {successRedirect: '/',
+//  failureRedirect: '/login',
+//  session: true}));
+router.post('/login', passport.authenticate('local'),function(req, res) {
+  res.redirect('/');
+});
 
 router.get('/logout', function(req, res) {
   req.logout();
