@@ -11,6 +11,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var winston = require('winston');
 
 var indexRouter = require('./routes/index');
 
@@ -57,9 +58,19 @@ app.use(function(req,res,next){
   next();
 });
 
+// add for winston
+const wlogger = winston.createLogger( {
+  level: 'debug',
+  format: winston.format.json(),
+  transports: [new winston.transports.Console()]
+});
+
+wlogger.debug('Debug message');
+//wlogger.error('Error message');
+
 var index = require('./routes/index');
 
-app.use('/', indexRouter);
+app.use('/', index);
 app.use('/index',index);
 
 // catch 404 and forward to error handler
