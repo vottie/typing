@@ -7,19 +7,19 @@ var db = mongoose.connection;
 
 // db.on('error', console.error.bind(console, 'connection error:'));
 
-var user = new Schema( { name: String, password: String });
+var user = new Schema( { username: String, password: String });
 var User = mongoose.model('user', user);
 
 var foo = new User({
-    name: "bbb",
-    password: "zzz"
+    username: "aaa",
+    password: "xyz"
 });
 
 foo.save(function(err) {
     if (err) throw err;
 });
 
-var rtn = User.find({ name: "bbb"});
+var rtn = User.find({ username: "bbb"});
 console.log(rtn);
 
 const res = User.updateOne( {name: "aaa"}, { name: "abc"},
@@ -29,4 +29,4 @@ const res = User.updateOne( {name: "aaa"}, { name: "abc"},
 );
 console.log(res);
 
-User.find({ name: "abc"});
+User.find({ username: "abc"});
